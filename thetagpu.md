@@ -13,5 +13,10 @@ export LD_PRELOAD="$DARSHAN_PRELOAD $LD_PRELOAD"
 ```
 ## Installing VaniDL
 ```bash
-pip install 
+git clone git@github.com:zhenghh04/vanidl.git
+cd vanidl
+python setup.py build
+python setup.py install --user
 ```
+## Running examples
+
