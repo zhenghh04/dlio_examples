@@ -33,7 +33,7 @@ python setup.py install --user
 This will generate the following example darshan output in the following directory
 /lus/grand/logs/darshan/thetagpu/YYYY/MM/DD/*.darshan
 
-## Generating profiling results (more details, vanidl_profile.py)
+## Generating profiling results ([more details: vanidl_profile.py](vanidl_profile.py))
 ```
 import vanidl
 from vanidl.analyzer import *
