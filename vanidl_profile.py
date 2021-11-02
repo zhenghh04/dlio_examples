@@ -1,8 +1,18 @@
 import vanidl
 from vanidl.analyzer import VaniDL
+import argparse
+parser = argparse.ArgumentParser(description='TensorFlow CIFAR10 Example')
+parser.add_argument('darshan', type=str, default="./profile.darshan", metavar='N',
+                    help='input batch size for training (default: 64)')
+args = parser.parse_args()
 profile = VaniDL()
 #Load darshan file
-status = profile.Load("./profile.darshan")
+import string
+import random
+N = 7
+res = ''.join(random.choices(string.ascii_uppercase +
+                             string.digits, k = N))    
+status = profile.Load(args.darshan, preprocessed_dir = "/tmp/hzheng_%s"%res)
 #Get Job Summary
 summary = profile.GetSummary()
 tl = profile.CreateIOTimeline()
@@ -22,21 +32,9 @@ plt.savefig("timeline.png")
 
 import pprint
 pp = pprint.PrettyPrinter(indent=1)
-class color:
-    PURPLE = '\033[95m'
-    CYAN = '\033[96m'
-    DARKCYAN = '\033[36m'
-    BLUE = '\033[94m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    RED = '\033[91m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    END = '\033[0m'
 
 print("Size of dataset (bytes)")
 pp.pprint(profile.GetFileSizes())
-    
 df = profile.GetDXTAsDF()
 pp.pprint("Files used in the application")
 pp.pprint(df['Filename'].unique().tolist())

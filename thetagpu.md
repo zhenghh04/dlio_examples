@@ -44,4 +44,10 @@ status = profile.Load("./res.darshan")
 summary = profile.GetSummary()
 # Print high level summary
 profile.PrintSummary()
-```
+plt.figure(figsize=(20,4))
+plt.grid()
+plt.plot(tl['time_step']/1000, tl['read_count'], label='read')
+plt.plot(tl['time_step']/1000, tl['write_count'], label='write')
+plt.xlabel("Time (second)")
+plt.ylabel("# of IO operation")
+plt.savefig("timeline.png")
