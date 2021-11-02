@@ -1,5 +1,4 @@
-# DLIO on ThetaGPU
-
+# Deep learning I/O profiling on ThetaGPU
 
 ## Environment setup
 ```bash
@@ -13,3 +12,6 @@ export DXT_ENABLE_IO_TRACE=4
 export LD_PRELOAD="$DARSHAN_PRELOAD $LD_PRELOAD"
 ```
 ## Installing VaniDL
+```bash
+pip install 
+```
