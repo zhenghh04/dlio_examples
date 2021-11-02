@@ -5,7 +5,7 @@
 ssh -CY user@theta.alcf.anl.gov
 qsub -n 4 -q debug-cache-quad -A datascience -t 1:00:00 -I 
 ```
-## Environment setup ([setup.sh](./setup_knl.sh))
+## Environment setup ([setup_knl.sh](./setup_knl.sh))
 ```bash
 # Loading TensorFlow / PyTorch module
 module load datascience/tensorflow-2.3
@@ -31,7 +31,7 @@ python setup.py install --user
 This will generate the following example darshan output in the following directory
 /lus/theta-fs0/logs/darshan/theta/$(date +%Y/%-m/%-d)
 
-## Generating profiling results (more details, vanidl_profile.py)
+## Generating profiling results (more details, [vanidl_profile.py](./vanidl_profile.py))
 ```
 import vanidl
 from vanidl.analyzer import *

@@ -6,7 +6,7 @@ ssh -CY user@theta.alcf.anl.gov
 ssh -CY thetagpusn1
 qsub -n 4 -q full-node -A datascience -t 1:00:00 -I --attrs=pubnet
 ```
-## Environment setup ([thetagpu.md](./thetagpu.md))
+## Environment setup ([thetagpu.sh](./thetagpu.sh))
 ```bash
 # Loading TensorFlow / PyTorch module
 module load conda/2021-09-22
