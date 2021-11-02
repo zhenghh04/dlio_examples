@@ -131,6 +131,7 @@ verbose = 0 if hvd.rank() == 0 else 0
 
 # Train the model.
 # Horovod: adjust number of steps based on number of GPUs.
+MPI.COMM_WORLD.Barrier()
 with tf.profiler.experimental.Profile(args.log_dir):
     mnist_model.fit(dataset, steps_per_epoch=nsamples // hvd.size() // args.batch_size, callbacks=callbacks, epochs=args.epochs, verbose=verbose)
 t1 = time.time()
