@@ -2,7 +2,7 @@ import vanidl
 from vanidl.analyzer import VaniDL
 profile = VaniDL()
 #Load darshan file
-status = profile.Load("./res.darshan")
+status = profile.Load("./profile.darshan")
 #Get Job Summary
 summary = profile.GetSummary()
 tl = profile.CreateIOTimeline()
@@ -46,5 +46,5 @@ for file in df['Filename'].unique():
 
 ##  Generate Timeline
 profile.CreateChromeTimeline(location="./", filename="timeline.json")
-#tensorboard_dir="log_dir"
-#val = profile.CreateMergedTimeline(tensorboard_dir, "./", "merge", save=True, split_by_ranks=True, timeshift=2.745017)
+tensorboard_dir="log_dir"
+val = profile.CreateMergedTimeline(tensorboard_dir, "./", "merge", save=True, timeshift=2.745017)

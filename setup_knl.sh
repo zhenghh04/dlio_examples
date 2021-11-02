@@ -1,13 +1,10 @@
 #!/bin/sh
-
-module load conda/2021-09-22
-conda activate
-
-# Loading Darshan
+module load datascience/tensorflow-2.3
 module load darshan
-export DARSHAN_LOG_DIR=/lus/grand/logs/darshan/thetagpu/$(date +%Y/%-m/%-d)
+export DARSHAN_LOG_DIR=/lus/theta-fs0/logs/darshan/theta/$(date +%Y/%-m/%-d)
 export DARSHAN_DISABLE_SHARED_REDUCTION=1
 export DXT_ENABLE_IO_TRACE=4
+export DARSHAN_PRELOAD=/soft/perftools/darshan/darshan-3.3.0/lib/libdarshan.so
 export LD_PRELOAD="$DARSHAN_PRELOAD $LD_PRELOAD"
 export DARSHAN_DIR=$(dirname $(dirname $DARSHAN_PRELOAD))
 [[ -e tmp ]] || mkdir tmp

@@ -1,16 +1,14 @@
 # Deep learning I/O profiling on ThetaGPU
 
-## Login to ThetaGPU
+## Login to Theta
 ```bash
 ssh -CY user@theta.alcf.anl.gov
-ssh -CY thetagpusn1
-qsub -n 4 -q full-node -A datascience -t 1:00:00 -I --attrs=pubnet
+qsub -n 4 -q debug-cache-quad -A datascience -t 1:00:00 -I 
 ```
-## Environment setup ([thetagpu.md](./thetagpu.md))
+## Environment setup ([setup.sh](./setup_knl.sh))
 ```bash
 # Loading TensorFlow / PyTorch module
-module load conda/2021-09-22
-conda activate
+module load datascience/tensorflow-2.3
 # Loading Darshan
 module load darshan
 export DARSHAN_DISABLE_SHARED_REDUCTION=1
@@ -28,10 +26,10 @@ python setup.py install --user
 ```
 ## Running examples
 ```
-./aprun.wrapper -n 32 -N 8 python tensorflow2_keras_mnist.py --device gpu
+./aprun.wrapper -n 32 -N 8 python tensorflow2_keras_mnist.py --device cpu
 ```
 This will generate the following example darshan output in the following directory
-/lus/grand/logs/darshan/thetagpu/YYYY/MM/DD/*.darshan
+/lus/theta-fs0/logs/darshan/theta/$(date +%Y/%-m/%-d)
 
 ## Generating profiling results (more details, vanidl_profile.py)
 ```

@@ -7,6 +7,7 @@ import os, sys
 import socket, glob
 host=socket.gethostname()
 env=[]
+os.environ["DARSHAN_EXCLUDE_DIRS"]="/lus/theta-fs0/software/thetagpu/conda/2021-09-22/mconda3/lib/python3.8/site-packages/"
 for k, v in os.environ.items():
     if k.find("BASH_FUNC")==-1 and k[0]!="_" and k.find("__")==-1 and k.find("COBALT_NODEFILE")==-1:
         env.append("-x %s"%k)
@@ -20,10 +21,11 @@ if host.find("gpu")!=-1:
             s[i] = "-np"
     s[0]="mpirun --hostfile ${COBALT_NODEFILE} %s"%e
     cmd = ' '.join(s)
-    print(cmd)
     os.system(cmd)
 else:
     cmd = '/opt/xalt/bin/aprun ' + ' '.join(sys.argv[1:])
+    print(cmd)
     os.system(cmd)
-        
-        
+
+os.system("cp -f `ls -t %s/%s* | head -1` profile.darshan" %(os.environ["DARSHAN_LOG_DIR"], os.environ["USER"]))
+print("Copy the most resent darshan log to the ./profile.darshan.")

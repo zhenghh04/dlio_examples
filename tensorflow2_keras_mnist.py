@@ -14,7 +14,6 @@
 # ==============================================================================
 
 import tensorflow as tf
-from mpi4py import MPI
 import argparse
 import time
 # Horovod: initialize Horovod.
@@ -127,14 +126,12 @@ if hvd.rank() == 0:
     #callbacks.append(tboard_callback)
 
 # Horovod: write logs on worker 0.
-verbose = 0 if hvd.rank() == 0 else 0
+verbose = 1 if hvd.rank() == 0 else 0
 
 # Train the model.
 # Horovod: adjust number of steps based on number of GPUs.
-MPI.COMM_WORLD.Barrier()
 with tf.profiler.experimental.Profile(args.log_dir):
     mnist_model.fit(dataset, steps_per_epoch=nsamples // hvd.size() // args.batch_size, callbacks=callbacks, epochs=args.epochs, verbose=verbose)
 t1 = time.time()
 if (hvd.rank()==0):
     print("Total training time: %s seconds" %(t1 - t0))
-MPI.COMM_WORLD.Barrier()
