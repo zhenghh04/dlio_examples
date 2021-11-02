@@ -32,8 +32,8 @@ python setup.py install --user
 This will generate the following example darshan output in the following directory
 /lus/grand/logs/darshan/thetagpu/YYYY/MM/DD/*.darshan
 
-## Generating 
-
+## Generating profiling results (more details, vanidl_profile.py)
+```
 import vanidl
 from vanidl.analyzer import *
 profile = VaniDL()
@@ -41,4 +41,6 @@ profile = VaniDL()
 status = profile.Load("./res.darshan")
 #Get Job Summary
 summary = profile.GetSummary()
-
+# Print high level summary
+profile.PrintSummary()
+```
