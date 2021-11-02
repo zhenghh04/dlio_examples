@@ -1,4 +1,4 @@
-# Deep learning I/O profiling on ThetaGPU
+# Deep learning I/O profiling on ThetaKNL
 
 ## Login to Theta
 ```bash
