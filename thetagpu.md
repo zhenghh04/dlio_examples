@@ -27,14 +27,14 @@ python setup.py build
 python setup.py install --user
 ```
 ## Running examples
-```
+```bash
 ./aprun.wrapper -n 32 -N 8 python tensorflow2_keras_mnist.py --device gpu
 ```
 This will generate the following example darshan output in the following directory
 /lus/grand/logs/darshan/thetagpu/YYYY/MM/DD/*.darshan
 
 ## Generating profiling results ([more details: vanidl_profile.py](vanidl_profile.py))
-```
+```python
 import vanidl
 from vanidl.analyzer import *
 profile = VaniDL()
@@ -51,3 +51,6 @@ plt.plot(tl['time_step']/1000, tl['write_count'], label='write')
 plt.xlabel("Time (second)")
 plt.ylabel("# of IO operation")
 plt.savefig("timeline.png")
+```
+
+![](images/timeline.png)
