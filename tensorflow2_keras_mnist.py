@@ -14,7 +14,7 @@
 # ==============================================================================
 
 import tensorflow as tf
-
+from mpi4py import MPI
 import argparse
 import time
 # Horovod: initialize Horovod.
@@ -40,13 +40,14 @@ parser.add_argument('--batch_size', type=int, default=64, metavar='N',
                     help='input batch size for training (default: 64)')
 parser.add_argument('--epochs', type=int, default=10, metavar='N',
                     help='number of epochs to train (default: 10)')
-parser.add_argument('--lr', type=float, default=0.01, metavar='LR',
+parser.add_argument('--lr', type=float, default=0.001, metavar='LR',
                     help='learning rate (default: 0.01)')
 parser.add_argument('--device', default='cpu',
                     help='Wheter this is running on cpu or gpu')
 parser.add_argument('--num_inter', default=2, help='set number inter', type=int)
 parser.add_argument('--num_intra', default=0, help='set number intra', type=int)
 parser.add_argument('--warmup_epochs', default=3, help='number of warmup epochs', type=int)
+parser.add_argument("--log_dir", default='log_dir')
 args = parser.parse_args()
 
 # Horovod: pin GPU to be used to process local rank (one GPU per process)
@@ -121,14 +122,18 @@ else:
     # Horovod: save checkpoints only on worker 0 to prevent other workers from corrupting them.
 
 if hvd.rank() == 0:
+    #tboard_callback = tf.keras.callbacks.TensorBoard(log_dir = args.log_dir, histogram_freq = 1, profile_batch = 2)
     callbacks.append(tf.keras.callbacks.ModelCheckpoint('./checkpoints/keras_mnist-{epoch}.h5'))
+    #callbacks.append(tboard_callback)
 
 # Horovod: write logs on worker 0.
-verbose = 1 if hvd.rank() == 0 else 0
+verbose = 0 if hvd.rank() == 0 else 0
 
 # Train the model.
 # Horovod: adjust number of steps based on number of GPUs.
-mnist_model.fit(dataset, steps_per_epoch=nsamples // hvd.size() // args.batch_size, callbacks=callbacks, epochs=args.epochs, verbose=verbose)
+with tf.profiler.experimental.Profile(args.log_dir):
+    mnist_model.fit(dataset, steps_per_epoch=nsamples // hvd.size() // args.batch_size, callbacks=callbacks, epochs=args.epochs, verbose=verbose)
 t1 = time.time()
 if (hvd.rank()==0):
     print("Total training time: %s seconds" %(t1 - t0))
+MPI.COMM_WORLD.Barrier()
