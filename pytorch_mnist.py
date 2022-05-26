@@ -116,9 +116,7 @@ compression = hvd.Compression.fp16 if args.fp16_allreduce else hvd.Compression.n
 
 
 # Horovod: wrap optimizer with DistributedOptimizer.
-optimizer = hvd.DistributedOptimizer(optimizer,
-									 named_parameters=model.named_parameters(),
-									 compression=compression)
+optimizer = hvd.DistributedOptimizer(optimizer, named_parameters=model.named_parameters(), compression=compression)
 
 
 def train(epoch):
