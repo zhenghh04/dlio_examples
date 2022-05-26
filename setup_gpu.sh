@@ -1,6 +1,6 @@
 #!/bin/sh
 
-module load conda/2021-09-22
+module load conda/2021-11-30
 conda activate
 
 # Loading Darshan
